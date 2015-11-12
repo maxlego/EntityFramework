@@ -21,8 +21,8 @@ namespace Microsoft.Data.Entity.SqlServer.Tests.Update
                     new FakeSensitiveDataLogger<RelationalCommandBuilderFactory>(),
                     new DiagnosticListener("Fake"),
                     new SqlServerTypeMapper()),
-                new SqlServerSqlGenerator(),
-                new SqlServerUpdateSqlGenerator(new SqlServerSqlGenerator()),
+                new SqlServerSqlGenerationHelper(),
+                new SqlServerUpdateSqlGenerator(new SqlServerSqlGenerationHelper()),
                 new UntypedRelationalValueBufferFactoryFactory(),
                 1);
 

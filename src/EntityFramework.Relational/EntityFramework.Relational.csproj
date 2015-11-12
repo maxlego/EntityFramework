@@ -243,12 +243,12 @@
     <Compile Include="Storage\IRelationalValueBufferFactory.cs" />
     <Compile Include="Storage\IRelationalValueBufferFactoryFactory.cs" />
     <Compile Include="Storage\ISqlCommandBuilder.cs" />
-    <Compile Include="Storage\ISqlGenerator.cs" />
+    <Compile Include="Storage\ISqlGenerationHelper.cs" />
     <Compile Include="Storage\Internal\RelationalCommand.cs" />
     <Compile Include="Storage\Internal\RelationalCommandBuilder.cs" />
     <Compile Include="Storage\Internal\RelationalCommandBuilderFactory.cs" />
     <Compile Include="Storage\RelationalCommandBuilderExtensions.cs" />
-    <Compile Include="Storage\RelationalCommandExtensions.cs" />
+    <Compile Include="Storage\Internal\RelationalCommandExtensions.cs" />
     <Compile Include="Storage\RelationalConnection.cs" />
     <Compile Include="Storage\RelationalDatabase.cs" />
     <Compile Include="Storage\RelationalDatabaseCreator.cs" />
@@ -256,7 +256,7 @@
     <Compile Include="Storage\RelationalDataReader.cs" />
     <Compile Include="Storage\RelationalParameter.cs" />
     <Compile Include="Storage\RelationalSizedTypeMapping.cs" />
-    <Compile Include="Storage\RelationalSqlGenerator.cs" />
+    <Compile Include="Storage\RelationalSqlGenerationHelper.cs" />
     <Compile Include="Storage\RelationalTransaction.cs" />
     <Compile Include="Storage\RelationalTypeMapper.cs" />
     <Compile Include="Storage\RelationalTypeMapperExtensions.cs" />

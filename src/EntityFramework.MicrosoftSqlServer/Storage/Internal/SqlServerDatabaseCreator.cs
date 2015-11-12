@@ -62,7 +62,7 @@ namespace Microsoft.Data.Entity.Storage.Internal
             => (int)CreateHasTablesCommand().ExecuteScalar(_connection) != 0;
 
         protected override async Task<bool> HasTablesAsync(CancellationToken cancellationToken = default(CancellationToken))
-            => (int)await CreateHasTablesCommand().ExecuteScalarAsync(_connection, cancellationToken) != 0;
+            => (int)await CreateHasTablesCommand().ExecuteScalarAsync(_connection, cancellationToken: cancellationToken) != 0;
 
         private IRelationalCommand CreateHasTablesCommand()
             => _sqlCommandBuilder

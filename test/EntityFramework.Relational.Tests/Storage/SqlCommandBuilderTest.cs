@@ -20,7 +20,7 @@ namespace Microsoft.Data.Entity.Storage
                     new FakeSensitiveDataLogger<RelationalCommandBuilderFactory>(),
                     new DiagnosticListener("Fake"),
                     new FakeRelationalTypeMapper()),
-                new RelationalSqlGenerator(),
+                new RelationalSqlGenerationHelper(),
                 new ParameterNameGeneratorFactory());
 
             var command = builder.Build("SQL COMMAND TEXT");
@@ -37,7 +37,7 @@ namespace Microsoft.Data.Entity.Storage
                     new FakeSensitiveDataLogger<RelationalCommandBuilderFactory>(),
                     new DiagnosticListener("Fake"),
                     new FakeRelationalTypeMapper()),
-                new RelationalSqlGenerator(),
+                new RelationalSqlGenerationHelper(),
                 new ParameterNameGeneratorFactory());
 
             var command = builder.Build("SQL COMMAND TEXT", new object[0]);
@@ -54,7 +54,7 @@ namespace Microsoft.Data.Entity.Storage
                     new FakeSensitiveDataLogger<RelationalCommandBuilderFactory>(),
                     new DiagnosticListener("Fake"),
                     new FakeRelationalTypeMapper()),
-                new RelationalSqlGenerator(),
+                new RelationalSqlGenerationHelper(),
                 new ParameterNameGeneratorFactory());
 
             var command = builder.Build("SQL COMMAND TEXT {0} {1} {2}", new object[] { 1, 2L, "three" });

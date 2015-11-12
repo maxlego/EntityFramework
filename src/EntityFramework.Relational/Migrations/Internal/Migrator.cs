@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Internal;
 using Microsoft.Data.Entity.Storage;
+using Microsoft.Data.Entity.Storage.Internal;
 using Microsoft.Data.Entity.Utilities;
 using Microsoft.Extensions.Logging;
 
@@ -23,7 +24,7 @@ namespace Microsoft.Data.Entity.Migrations.Internal
         private readonly IMigrationsSqlGenerator _migrationsSqlGenerator;
         private readonly ISqlCommandBuilder _sqlCommandBuilder;
         private readonly IRelationalConnection _connection;
-        private readonly ISqlGenerator _sqlGenerator;
+        private readonly ISqlGenerationHelper _sqlGenerationHelper;
         private readonly ILogger _logger;
         private readonly string _activeProvider;
 
@@ -34,7 +35,7 @@ namespace Microsoft.Data.Entity.Migrations.Internal
             [NotNull] IMigrationsSqlGenerator migrationsSqlGenerator,
             [NotNull] ISqlCommandBuilder sqlCommandBuilder,
             [NotNull] IRelationalConnection connection,
-            [NotNull] ISqlGenerator sqlGenerator,
+            [NotNull] ISqlGenerationHelper sqlGenerationHelper,
             [NotNull] ILogger<Migrator> logger,
             [NotNull] IDatabaseProviderServices providerServices)
         {
@@ -44,7 +45,7 @@ namespace Microsoft.Data.Entity.Migrations.Internal
             Check.NotNull(migrationsSqlGenerator, nameof(migrationsSqlGenerator));
             Check.NotNull(sqlCommandBuilder, nameof(sqlCommandBuilder));
             Check.NotNull(connection, nameof(connection));
-            Check.NotNull(sqlGenerator, nameof(sqlGenerator));
+            Check.NotNull(sqlGenerationHelper, nameof(sqlGenerationHelper));
             Check.NotNull(logger, nameof(logger));
             Check.NotNull(providerServices, nameof(providerServices));
 
@@ -55,7 +56,7 @@ namespace Microsoft.Data.Entity.Migrations.Internal
             _sqlCommandBuilder = sqlCommandBuilder;
             _sqlCommandBuilder = sqlCommandBuilder;
             _connection = connection;
-            _sqlGenerator = sqlGenerator;
+            _sqlGenerationHelper = sqlGenerationHelper;
             _logger = logger;
             _activeProvider = providerServices.InvariantName;
         }
@@ -233,7 +234,7 @@ namespace Microsoft.Data.Entity.Migrations.Internal
                         if (migration.GetId() == migrations.Keys.First())
                         {
                             builder.AppendLine(_historyRepository.GetCreateIfNotExistsScript());
-                            builder.Append(_sqlGenerator.BatchSeparator);
+                            builder.Append(_sqlGenerationHelper.BatchTerminator);
                         }
 
                         checkFirst = false;
@@ -257,7 +258,7 @@ namespace Microsoft.Data.Entity.Migrations.Internal
                             builder.AppendLine(command.CommandText);
                         }
 
-                        builder.Append(_sqlGenerator.BatchSeparator);
+                        builder.Append(_sqlGenerationHelper.BatchTerminator);
                     }
                 }
             }
@@ -295,7 +296,7 @@ namespace Microsoft.Data.Entity.Migrations.Internal
                             builder.AppendLine(command.CommandText);
                         }
 
-                        builder.Append(_sqlGenerator.BatchSeparator);
+                        builder.Append(_sqlGenerationHelper.BatchTerminator);
                     }
                 }
             }

@@ -41,7 +41,7 @@ namespace Microsoft.Data.Entity.Storage.Internal
 
         public virtual IReadOnlyList<IRelationalParameter> Parameters { get; }
 
-        public virtual void ExecuteNonQuery(
+        public virtual int ExecuteNonQuery(
             IRelationalConnection connection,
             bool manageConnection = true)
             => Execute(
@@ -57,10 +57,10 @@ namespace Microsoft.Data.Entity.Storage.Internal
                 openConnection: manageConnection,
                 closeConnection: manageConnection);
 
-        public virtual async Task ExecuteNonQueryAsync(
+        public virtual async Task<int> ExecuteNonQueryAsync(
             IRelationalConnection connection,
-            CancellationToken cancellationToken = default(CancellationToken),
-            bool manageConnection = true)
+            bool manageConnection = true,
+            CancellationToken cancellationToken = default(CancellationToken))
             => await ExecuteAsync(
                 Check.NotNull(connection, nameof(connection)),
                 async (cmd, con, ct) =>
@@ -93,8 +93,8 @@ namespace Microsoft.Data.Entity.Storage.Internal
 
         public virtual async Task<object> ExecuteScalarAsync(
             IRelationalConnection connection,
-            CancellationToken cancellationToken = default(CancellationToken),
-            bool manageConnection = true)
+            bool manageConnection = true,
+            CancellationToken cancellationToken = default(CancellationToken))
             => await ExecuteAsync(
                 Check.NotNull(connection, nameof(connection)),
                 async (cmd, con, ct) =>
@@ -139,9 +139,9 @@ namespace Microsoft.Data.Entity.Storage.Internal
 
         public virtual async Task<RelationalDataReader> ExecuteReaderAsync(
             IRelationalConnection connection,
-            CancellationToken cancellationToken = default(CancellationToken),
             bool manageConnection = true,
-            IReadOnlyDictionary<string, object> parameterValues = null)
+            IReadOnlyDictionary<string, object> parameterValues = null,
+            CancellationToken cancellationToken = default(CancellationToken))
             => await ExecuteAsync(
                 Check.NotNull(connection, nameof(connection)),
                 async (cmd, con, ct) =>

@@ -59,7 +59,7 @@ namespace Microsoft.Data.Entity.Infrastructure
                     .AddScoped<MigrationsSqlGenerator>()
                     .AddScoped(typeof(ISensitiveDataLogger<>), typeof(SensitiveDataLogger<>))
                     .AddScoped(p => GetProviderServices(p).ParameterNameGeneratorFactory)
-                    .AddScoped(p => GetProviderServices(p).SqlGenerator)
+                    .AddScoped(p => GetProviderServices(p).SqlGenerationHelper)
                     .AddScoped(p => GetProviderServices(p).CompositeMethodCallTranslator)
                     .AddScoped(p => GetProviderServices(p).CompositeMemberTranslator)
                     .AddScoped(p => GetProviderServices(p).CompositeExpressionFragmentTranslator)

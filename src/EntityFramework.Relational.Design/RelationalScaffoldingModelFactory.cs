@@ -179,8 +179,16 @@ namespace Microsoft.Data.Entity.Scaffolding
 
             RelationalTypeMapping mapping;
 
-            if (!_typeMapper.TryGetMapping(column.DataType, out mapping)
-                || mapping.ClrType == null)
+            try
+            {
+                mapping = _typeMapper.GetMapping(column.DataType);
+            }
+            catch
+            {
+                mapping = null;
+            }
+
+            if (mapping?.ClrType == null)
             {
                 Logger.LogWarning(RelationalDesignStrings.CannotFindTypeMappingForColumn(column.DisplayName, column.DataType));
                 return null;

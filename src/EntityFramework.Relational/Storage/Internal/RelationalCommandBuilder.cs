@@ -33,7 +33,7 @@ namespace Microsoft.Data.Entity.Storage.Internal
             _typeMapper = typeMapper;
         }
 
-        public virtual IndentedStringBuilder CommandTextBuilder { get; } = new IndentedStringBuilder();
+        public virtual IndentedStringBuilder Instance { get; } = new IndentedStringBuilder();
 
         public virtual IRelationalParameter CreateParameter(
             string name,
@@ -59,9 +59,9 @@ namespace Microsoft.Data.Entity.Storage.Internal
             => new RelationalCommand(
                 _logger,
                 _diagnosticSource,
-                CommandTextBuilder.ToString(),
+                Instance.ToString(),
                 _parameters);
 
-        public override string ToString() => CommandTextBuilder.ToString();
+        public override string ToString() => Instance.ToString();
     }
 }

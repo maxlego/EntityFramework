@@ -12,8 +12,8 @@ namespace Microsoft.Data.Entity.Update.Internal
 {
     public class SqlServerUpdateSqlGenerator : UpdateSqlGenerator, ISqlServerUpdateSqlGenerator
     {
-        public SqlServerUpdateSqlGenerator([NotNull] ISqlGenerator sqlGenerator)
-            : base(sqlGenerator)
+        public SqlServerUpdateSqlGenerator([NotNull] ISqlGenerationHelper sqlGenerationHelper)
+            : base(sqlGenerationHelper)
         {
         }
 
@@ -63,7 +63,7 @@ namespace Microsoft.Data.Entity.Update.Internal
                     commandStringBuilder.Append(",").AppendLine();
                     AppendValues(commandStringBuilder, modificationCommands[j].ColumnModifications.Where(o => o.IsWrite).ToArray());
                 }
-                commandStringBuilder.Append(SqlGenerator.BatchCommandSeparator).AppendLine();
+                commandStringBuilder.Append(SqlGenerationHelper.StatementTerminator).AppendLine();
 
                 if (readOperations.Length == 0)
                 {
@@ -97,7 +97,7 @@ namespace Microsoft.Data.Entity.Update.Internal
                 AppendOutputClause(commandStringBuilder, readOperations);
             }
             AppendWhereClause(commandStringBuilder, conditionOperations);
-            commandStringBuilder.Append(SqlGenerator.BatchCommandSeparator).AppendLine();
+            commandStringBuilder.Append(SqlGenerationHelper.StatementTerminator).AppendLine();
 
             if (readOperations.Length == 0)
             {
@@ -112,21 +112,21 @@ namespace Microsoft.Data.Entity.Update.Internal
             => commandStringBuilder
                 .AppendLine()
                 .Append("OUTPUT ")
-                .AppendJoin(operations.Select(c => "INSERTED." + SqlGenerator.DelimitIdentifier(c.ColumnName)));
+                .AppendJoin(operations.Select(c => "INSERTED." + SqlGenerationHelper.DelimitIdentifier(c.ColumnName)));
 
         protected override void AppendSelectAffectedCountCommand(StringBuilder commandStringBuilder, string name, string schema)
             => Check.NotNull(commandStringBuilder, nameof(commandStringBuilder))
                 .Append("SELECT @@ROWCOUNT")
-                .Append(SqlGenerator.BatchCommandSeparator).AppendLine();
+                .Append(SqlGenerationHelper.StatementTerminator).AppendLine();
 
         public override void AppendBatchHeader(StringBuilder commandStringBuilder)
             => Check.NotNull(commandStringBuilder, nameof(commandStringBuilder))
                 .Append("SET NOCOUNT OFF")
-                .Append(SqlGenerator.BatchCommandSeparator).AppendLine();
+                .Append(SqlGenerationHelper.StatementTerminator).AppendLine();
 
         protected override void AppendIdentityWhereCondition(StringBuilder commandStringBuilder, ColumnModification columnModification)
             => Check.NotNull(commandStringBuilder, nameof(commandStringBuilder))
-                .Append(SqlGenerator.DelimitIdentifier(Check.NotNull(columnModification, nameof(columnModification)).ColumnName))
+                .Append(SqlGenerationHelper.DelimitIdentifier(Check.NotNull(columnModification, nameof(columnModification)).ColumnName))
                 .Append(" = ")
                 .Append("scope_identity()");
 

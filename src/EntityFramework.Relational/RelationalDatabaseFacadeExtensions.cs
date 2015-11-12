@@ -38,7 +38,7 @@ namespace Microsoft.Data.Entity
             => Check.NotNull(databaseFacade, nameof(databaseFacade)).GetService<IMigrator>()
                 .MigrateAsync(cancellationToken: cancellationToken);
 
-        public static void ExecuteSqlCommand(
+        public static int ExecuteSqlCommand(
             [NotNull] this DatabaseFacade databaseFacade,
             [NotNull] string sql,
             [NotNull] params object[] parameters)
@@ -48,7 +48,7 @@ namespace Microsoft.Data.Entity
                     sql,
                     parameters);
 
-        public static Task ExecuteSqlCommandAsync(
+        public static Task<int> ExecuteSqlCommandAsync(
             [NotNull] this DatabaseFacade databaseFacade,
             [NotNull] string sql,
             CancellationToken cancellationToken = default(CancellationToken),

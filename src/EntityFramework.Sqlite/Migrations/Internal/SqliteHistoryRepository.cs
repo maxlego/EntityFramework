@@ -20,7 +20,7 @@ namespace Microsoft.Data.Entity.Migrations.Internal
             [NotNull] IMigrationsModelDiffer modelDiffer,
             [NotNull] IMigrationsSqlGenerator migrationsSqlGenerator,
             [NotNull] IRelationalAnnotationProvider annotations,
-            [NotNull] ISqlGenerator sqlGenerator)
+            [NotNull] ISqlGenerationHelper sqlGenerationHelper)
             : base(
                 databaseCreator,
                 sqlCommandBuilder,
@@ -29,13 +29,13 @@ namespace Microsoft.Data.Entity.Migrations.Internal
                 modelDiffer,
                 migrationsSqlGenerator,
                 annotations,
-                sqlGenerator)
+                sqlGenerationHelper)
         {
         }
 
         protected override string ExistsSql
             => "SELECT COUNT(*) FROM \"sqlite_master\" WHERE \"name\" = '" +
-               SqlGenerator.EscapeLiteral(TableName) +
+               SqlGenerationHelper.EscapeLiteral(TableName) +
                "' AND \"type\" = 'table';";
 
         protected override bool InterpretExistsResult(object value) => (long)value != 0L;

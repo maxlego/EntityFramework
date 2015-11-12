@@ -25,14 +25,14 @@ namespace Microsoft.Data.Entity.Infrastructure
             _connection = connection;
         }
 
-        public virtual void ExecuteSqlCommand([NotNull] string sql, [NotNull] params object[] parameters)
+        public virtual int ExecuteSqlCommand([NotNull] string sql, [NotNull] params object[] parameters)
             => _sqlCommandBuilder
                 .Build(
                     Check.NotNull(sql, nameof(sql)),
                     Check.NotNull(parameters, nameof(parameters)))
                 .ExecuteNonQuery(_connection);
 
-        public virtual async Task ExecuteSqlCommandAsync(
+        public virtual async Task<int> ExecuteSqlCommandAsync(
             [NotNull] string sql,
             CancellationToken cancellationToken = default(CancellationToken),
             [NotNull] params object[] parameters)
@@ -40,6 +40,6 @@ namespace Microsoft.Data.Entity.Infrastructure
                 .Build(
                     Check.NotNull(sql, nameof(sql)),
                     Check.NotNull(parameters, nameof(parameters)))
-                .ExecuteNonQueryAsync(_connection, cancellationToken);
+                .ExecuteNonQueryAsync(_connection, cancellationToken: cancellationToken);
     }
 }

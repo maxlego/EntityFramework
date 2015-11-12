@@ -16,22 +16,5 @@ namespace Microsoft.Data.Entity.Storage
                || (typeMapper == null)
                 ? RelationalTypeMapping.NullMapping
                 : typeMapper.GetMapping(value.GetType());
-
-        public static bool TryGetMapping(
-            [NotNull] this IRelationalTypeMapper typeMapper,
-            [NotNull] string typeName,
-            [CanBeNull] out RelationalTypeMapping mapping)
-        {
-            try
-            {
-                mapping = typeMapper.GetMapping(typeName);
-                return mapping != null;
-            }
-            catch
-            {
-                mapping = null;
-                return false;
-            }
-        }
     }
 }

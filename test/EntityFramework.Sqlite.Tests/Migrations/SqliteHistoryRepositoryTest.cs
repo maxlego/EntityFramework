@@ -100,7 +100,7 @@ namespace Microsoft.Data.Entity.Migrations
         private static IHistoryRepository CreateHistoryRepository()
         {
             var annotationsProvider = new SqliteAnnotationProvider();
-            var sqlGenerator = new SqliteSqlGenerator();
+            var sqlGenerator = new SqliteSqlGenerationHelper();
             var typeMapper = new SqliteTypeMapper();
 
             return new SqliteHistoryRepository(
@@ -121,7 +121,7 @@ namespace Microsoft.Data.Entity.Migrations
                         new FakeSensitiveDataLogger<RelationalCommandBuilderFactory>(),
                         new DiagnosticListener("Fake"),
                         typeMapper),
-                    new SqliteSqlGenerator(),
+                    new SqliteSqlGenerationHelper(),
                     typeMapper,
                     annotationsProvider),
                 annotationsProvider,
