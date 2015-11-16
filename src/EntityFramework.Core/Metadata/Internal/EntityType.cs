@@ -457,6 +457,7 @@ namespace Microsoft.Data.Entity.Metadata.Internal
             }
 
             _keys.Remove(key.Properties);
+            key.Builder = null;
 
             PropertyMetadataChanged();
 
@@ -697,7 +698,7 @@ namespace Microsoft.Data.Entity.Metadata.Internal
                 name,
                 this,
                 pointsToPrincipal ? foreignKey.PrincipalEntityType : foreignKey.DeclaringEntityType,
-                !pointsToPrincipal && !((IForeignKey)foreignKey).IsUnique,
+                !pointsToPrincipal && !foreignKey.IsUnique,
                 shouldThrow: true);
 
             var navigation = new Navigation(name, foreignKey);
@@ -839,6 +840,7 @@ namespace Microsoft.Data.Entity.Metadata.Internal
         private Index RemoveIndex(Index index)
         {
             _indexes.Remove(index.Properties);
+            index.Builder = null;
             return index;
         }
 
@@ -935,6 +937,7 @@ namespace Microsoft.Data.Entity.Metadata.Internal
             CheckPropertyNotInUse(property);
 
             _properties.Remove(property.Name);
+            property.Builder = null;
 
             PropertyMetadataChanged();
 
