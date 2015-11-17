@@ -3,6 +3,7 @@
 
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using JetBrains.Annotations;
 using Microsoft.Data.Entity.Utilities;
 
@@ -31,7 +32,7 @@ namespace Microsoft.Data.Entity.Metadata.Internal
 
         public virtual IReadOnlyList<Property> Properties { get; }
         public virtual EntityType DeclaringEntityType { get; }
-        public virtual InternalIndexBuilder Builder { get; [param: CanBeNull] set; }
+        public virtual InternalIndexBuilder Builder { get;[param: CanBeNull] set; }
 
         public virtual ConfigurationSource GetConfigurationSource() => _configurationSource;
 
@@ -49,5 +50,7 @@ namespace Microsoft.Data.Entity.Metadata.Internal
 
         [UsedImplicitly]
         private string DebuggerDisplay => Property.Format(Properties);
+
+        public virtual bool IsInUse() => DeclaringEntityType.FindForeignKeys(Properties).Any();
     }
 }
